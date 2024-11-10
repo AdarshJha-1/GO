@@ -13,6 +13,9 @@ func (p Person) GetDetails() string { // Value receiver, it does not allow to ma
 }
 
 func (p *Person) ChangeName(name string) { // Pointer receiver, it allow to make change in values
+	if p == nil {
+		return
+	}
 	p.Name = name
 }
 
@@ -25,12 +28,21 @@ func (c Circle) Area() float64 {
 }
 
 func main() {
-	var p1 Person = Person{
-		Name: "Money D. Luffy",
-		Age:  19,
+	// var p1 Person = Person{
+	// 	Name: "Money D. Luffy",
+	// 	Age:  19,
+	// }
+
+	// fmt.Println(p1.GetDetails())
+	// p1.ChangeName("Roronoa Zoro")
+	// fmt.Println(p1.GetDetails())
+
+	// var p2 *Person // nil pointer
+	// p2.ChangeName("AAA")
+
+	circle := Circle{
+		Radius: 10,
 	}
 
-	fmt.Println(p1.GetDetails())
-	p1.ChangeName("Roronoa Zoro")
-	fmt.Println(p1.GetDetails())
+	fmt.Println(circle.Area())
 }
