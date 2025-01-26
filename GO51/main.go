@@ -10,42 +10,42 @@ var (
 	mutex2 sync.Mutex
 )
 
-// Deadlock
 func resource1(name string) {
 	mutex1.Lock()
 	fmt.Println(name, "acquired resource 1")
 	resource2(name)
 	mutex1.Unlock()
 }
+
 func resource2(name string) {
-	mutex1.Lock()
+	mutex2.Lock()
 	fmt.Println(name, "acquired resource 2")
 	resource1(name)
-	mutex1.Unlock()
+	mutex2.Unlock()
 }
 
 func main() {
-	/*
-		var counter int
+	// var counter int
+	// var lock sync.Mutex
 
-		var lock sync.Mutex
-		for range 10 {
-			go func() {
-				lock.Lock()
-				counter++
-				lock.Unlock()
-			}()
-		}
+	// for range 1000 {
+	// 	go func() {
+	// 		lock.Lock()
+	// 		counter++
+	// 		lock.Unlock()
+	// 	}()
+	// }
 
-		lock.Lock()
-		fmt.Println("Expected counter:", 10)
-		lock.Unlock()
-		fmt.Println("Actual counter:", counter)
-	*/
+	// // time.Sleep(10 * time.Second)
+
+	// lock.Lock()
+	// fmt.Println("Expected counter:", 1000)
+	// fmt.Println("Actual counter:", counter)
+	// lock.Unlock()
 
 	go resource1("Goroutine 1")
-	go resource2("Goroutine 2")
+	go resource1("Goroutine 2")
 
-	fmt.Println("Waiting...")
+	fmt.Println("waiting...")
 	select {}
 }
